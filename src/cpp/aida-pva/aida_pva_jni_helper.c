@@ -838,12 +838,15 @@ jobject toTable(JNIEnv* env, Table table)
 }
 
 /**
- * Free up any memory allocated for the given arguments
+ * Free up any memory allocated for the given pv and arguments
  *
  * @param arguments the given arguments
  */
-void releaseArguments(Arguments arguments)
+void releasePvAndArguments(JNIEnv* env, jstring uri, const char* pv, Arguments arguments)
 {
+	if (pv) {
+		(*env)->ReleaseStringUTFChars(env, uri, pv);
+	}
 	if (arguments.floatingPointValues && arguments.floatingPointValuesCount) {
 		free(arguments.floatingPointValues);
 		arguments.floatingPointValuesCount = 0;

@@ -87,6 +87,7 @@ extern "C" {
 
 /**
  * Check to see if an exception has been raised,
+ * free local variable pv if set,
  * free local variable {@link Arguments}
  * and return the given return value.
  *
@@ -95,14 +96,15 @@ extern "C" {
  * @param _r the specified return value.
  * @return This MACRO will return the specified return value from your function if there has been an exception.
  */
-#define ON_EXCEPTION_FREE_ARGUMENTS_AND_RETURN_(_r) \
+#define ON_EXCEPTION_FREE_PV_AND_ARGUMENTS_AND_RETURN_(_r) \
     if ((*env)->ExceptionCheck(env)) { \
-        releaseArguments(arguments); \
+        releasePvAndArguments(env, uri, pv, arguments); \
         return _r; \
     }
 
 /**
  * Check to see if an exception has been raised,
+ * free local variable pv if set,
  * free local variable {@link Arguments}
  * and return void,
  *
@@ -110,15 +112,16 @@ extern "C" {
  *
  * @return This MACRO will return from your function if there has been an exception.
  */
-#define ON_EXCEPTION_FREE_ARGUMENTS_AND_RETURN_VOID \
+#define ON_EXCEPTION_FREE_PV_AND_ARGUMENTS_AND_RETURN_VOID \
     if ((*env)->ExceptionCheck(env)) { \
-        releaseArguments(arguments); \
+        releasePvAndArguments(env, uri, pv, arguments); \
         return; \
     }
 
 /**
  * Check to see if an exception has been raised,
  * free a local variable `string`,
+ * free local variable pv if set,
  * free local variable {@link Arguments}
  * and return the given return value.
  *
@@ -127,10 +130,10 @@ extern "C" {
  * @param _r the specified return value.
  * @return This MACRO will return the specified return value from your function if there has been an exception.
  */
-#define ON_EXCEPTION_FREE_STRING_AND_ARGS_AND_RETURN_(_r) \
+#define ON_EXCEPTION_FREE_STRING_AND_PV_AND_ARGS_AND_RETURN_(_r) \
     if ((*env)->ExceptionCheck(env)) { \
         if ( string ) free(string); \
-        releaseArguments(arguments); \
+        releasePvAndArguments(env, uri, pv, arguments); \
         return _r; \
     }
 
@@ -153,6 +156,7 @@ extern "C" {
 /**
  * Check to see if an exception has been raised,
  * free local variable {@link Array},
+ * free local variable pv if set,
  * free local variable {@link Arguments}
  * and return the given return value.
  *
@@ -161,16 +165,17 @@ extern "C" {
  * @param _r the specified return value.
  * @return This MACRO will return the specified return value from your function if there has been an exception.
  */
-#define ON_EXCEPTION_FREE_ARRAY_AND_ARGS_AND_RETURN_(_r) \
+#define ON_EXCEPTION_FREE_ARRAY_AND_PV_AND_ARGS_AND_RETURN_(_r) \
     if ((*env)->ExceptionCheck(env)) { \
         releaseArray(array); \
-        releaseArguments(arguments); \
+        releasePvAndArguments(env, uri, pv, arguments); \
         return _r; \
     }
 
 /**
  * Check to see if an exception has been raised,
  * free local variable {@link Array},
+ * free local variable pv if set,
  * free local variable {@link Arguments}
  * and return void.
  *
@@ -178,16 +183,17 @@ extern "C" {
  *
  * @return This MACRO will return from your function if there has been an exception.
  */
-#define ON_EXCEPTION_FREE_STRING_ARRAY_AND_ARGS_AND_RETURN_NULL \
+#define ON_EXCEPTION_FREE_STRING_ARRAY_AND_PV_AND_ARGS_AND_RETURN_NULL \
     if ((*env)->ExceptionCheck(env)) { \
         releaseStringArray(array); \
-        releaseArguments(arguments); \
+        releasePvAndArguments(env, uri, pv, arguments); \
         return NULL; \
     }
 
 /**
  * Check to see if an exception has been raised,
  * free local variable {@link Table},
+ * free local variable pv if set,
  * free local variable {@link Arguments},
  * and return the given return value.
  *
@@ -196,16 +202,17 @@ extern "C" {
  * @param _r the specified return value.
  * @return This MACRO will return the specified return value from your function if there has been an exception.
  */
-#define ON_EXCEPTION_FREE_TABLE_AND_ARGS_AND_RETURN_(_r) \
+#define ON_EXCEPTION_FREE_TABLE_AND_PV_AND_ARGS_AND_RETURN_(_r) \
     if ((*env)->ExceptionCheck(env)) { \
         releaseTable(table); \
-        releaseArguments(arguments); \
+        releasePvAndArguments(env, uri, pv, arguments); \
         return _r; \
     }
 
 /**
  * Check to see if an exception has been raised,
  * free local variable `value`,
+ * free local variable pv if set,
  * free local variable {@link Arguments}
  * and return void.
  *
@@ -213,16 +220,17 @@ extern "C" {
  *
  * @return This MACRO will return from your function if there has been an exception.
  */
-#define ON_EXCEPTION_FREE_VALUE_AND_ARGS_AND_RETURN_VOID \
+#define ON_EXCEPTION_FREE_VALUE_AND_PV_AND_ARGS_AND_RETURN_VOID \
     if ((*env)->ExceptionCheck(env)) { \
         releaseValue(value); \
-        releaseArguments(arguments); \
+        releasePvAndArguments(env, uri, pv, arguments); \
         return; \
     }
 
 /**
  * Check to see if an exception has been raised,
  * free local variable `value`,
+ * free local variable pv if set,
  * free local variable {@link Arguments},
  * and return the given return value.
  *
@@ -231,10 +239,10 @@ extern "C" {
  * @param _r the specified return value.
  * @return This MACRO will return the specified return value from your function if there has been an exception.
  */
-#define ON_EXCEPTION_FREE_VALUE_AND_ARGS_AND_RETURN_(_r) \
+#define ON_EXCEPTION_FREE_VALUE_AND_PV_AND_ARGS_AND_RETURN_(_r) \
     if ((*env)->ExceptionCheck(env)) { \
         releaseValue(value); \
-        releaseArguments(arguments); \
+        releasePvAndArguments(env, uri, pv, arguments); \
         return _r; \
     }
 
